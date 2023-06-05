@@ -1,5 +1,8 @@
 package ru.rabiarill.model;
 
+import org.modelmapper.ModelMapper;
+import ru.rabiarill.dto.model.UserDTO;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +29,13 @@ public class User {
 
 
    public User() { }
+
+   public User(int id, String username, String email, String password) {
+      this.id = id;
+      this.username = username;
+      this.email = email;
+      this.password = password;
+   }
 
    public int getId() {
       return id;
@@ -80,5 +90,14 @@ public class User {
    @Override
    public int hashCode() {
       return Objects.hash(id, username, email);
+   }
+
+   public void updateFields(User newUser){
+      this.username = newUser.getUsername();
+      this.email = newUser.getEmail();
+   }
+
+   public UserDTO convertToDTO(){
+      return new ModelMapper().map(this, UserDTO.class);
    }
 }
