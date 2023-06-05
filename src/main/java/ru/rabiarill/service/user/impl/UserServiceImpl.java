@@ -22,12 +22,17 @@ public class UserServiceImpl implements UserService {
       this.userRepository = userRepository;
    }
 
-
+   /**
+    * @see UserService#findAll() 
+    */
    @Override
    public List<User> findAll() {
       return userRepository.findAll();
    }
 
+   /**
+    * @see UserService#findById(int)
+    */
    @Override
    public User findById(int id) {
       return userRepository
@@ -35,17 +40,26 @@ public class UserServiceImpl implements UserService {
               .orElseThrow(() -> new UserNotFoundException("User with id = " + id + " not found"));
    }
 
+   /**
+    * @see UserService#findByUsername(String)
+    */
    @Override
    public Optional<User> findByUsername(String username) {
       return userRepository.findByUsername(username);
    }
 
+   /**
+    * @see UserService#save(User)
+    */
    @Override
    @Transactional()
    public User save(User user) {
       return userRepository.save(user);
    }
 
+   /**
+    * @see UserService#deleteById(int)
+    */
    @Override
    @Transactional()
    public void deleteById(int id) {
