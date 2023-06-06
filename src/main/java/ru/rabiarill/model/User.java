@@ -1,6 +1,8 @@
 package ru.rabiarill.model;
 
 
+import ru.rabiarill.model.subscriptions.Subscriptions;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +27,11 @@ public class User {
    @OneToMany(mappedBy = "owner")
    private List<Post> posts;
 
+   @OneToMany(mappedBy = "subscribedTo", cascade = CascadeType.ALL)
+   private List<Subscriptions> subscribed;
+
+//   @OneToMany(mappedBy = "friendTwo", cascade = CascadeType.ALL)
+//   private List<Friends> friends;
 
    public User() { }
 
@@ -74,6 +81,22 @@ public class User {
    public void setPosts(List<Post> posts) {
       this.posts = posts;
    }
+
+   public List<Subscriptions> getSubscribed() {
+      return subscribed;
+   }
+
+   public void setSubscribed(List<Subscriptions> subscribed) {
+      this.subscribed = subscribed;
+   }
+
+//   public List<User> getFriends() {
+//      return friends;
+//   }
+//
+//   public void setFriends(List<User> friends) {
+//      this.friends = friends;
+//   }
 
    @Override
    public boolean equals(Object o) {

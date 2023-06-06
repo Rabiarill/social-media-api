@@ -39,7 +39,7 @@ public class Post {
    @DateTimeFormat(pattern = "dd/MM/YYYY hh/mm")
    private Date updated_at;
 
-   @OneToMany(mappedBy = "post")
+   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
    private List<Image> images;
 
    public Post() { }
