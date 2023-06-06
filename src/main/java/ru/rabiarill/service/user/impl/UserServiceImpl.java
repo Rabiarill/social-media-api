@@ -1,8 +1,10 @@
 package ru.rabiarill.service.user.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.rabiarill.dto.model.UserDTO;
 import ru.rabiarill.exception.model.user.UserNotFoundException;
 import ru.rabiarill.model.User;
 import ru.rabiarill.repository.UserRepository;
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
    private final UserRepository userRepository;
+   private final ModelMapper modelMapper;
 
    @Autowired
-   public UserServiceImpl(UserRepository userRepository) {
+   public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper) {
       this.userRepository = userRepository;
+      this.modelMapper = modelMapper;
    }
 
    /**
@@ -65,4 +69,21 @@ public class UserServiceImpl implements UserService {
    public void deleteById(int id) {
       userRepository.deleteById(id);
    }
+
+   /**
+    * @see UserService#convertToUser(UserDTO)
+    */
+   @Override
+   public User convertToUser(UserDTO userDTO) {
+      return modelMapper.map(userDTO, User.class);
+   }
+
+   /**
+    * @see UserService#convertToDTO(User)
+    */
+   @Override
+   public UserDTO convertToDTO(User user) {
+      return modelMapper.map(user, UserDTO.class);
+   }
+
 }

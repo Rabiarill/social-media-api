@@ -1,24 +1,29 @@
 package ru.rabiarill.service.post.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.rabiarill.dto.model.PostDTO;
 import ru.rabiarill.exception.model.post.PostNotFoundException;
 import ru.rabiarill.model.Post;
 import ru.rabiarill.repository.PostRepository;
 import ru.rabiarill.service.post.PostService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("postService")
 @Transactional(readOnly = true)
 public class PostServiceImpl implements PostService {
 
    private final PostRepository postRepository;
+   private final ModelMapper modelMapper;
 
    @Autowired
-   public PostServiceImpl(PostRepository postRepository) {
+   public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
       this.postRepository = postRepository;
+      this.modelMapper = modelMapper;
    }
 
    /**
@@ -56,4 +61,43 @@ public class PostServiceImpl implements PostService {
    public void deleteById(int id) {
       postRepository.deleteById(id);
    }
+
+   /**
+    * @see PostService#convertToPost(PostDTO)
+    */
+   @Override
+   public Post convertToPost(PostDTO postDTO) {
+      return modelMapper.map(postDTO, Post.class);
+   }
+
+   /**
+    * @see PostService#convertToPost(List)
+    */
+   @Override
+   public List<Post> convertToPost(List<PostDTO> postDTOs) {
+      return postDTOs
+              .stream()
+              .map(this::convertToPost)
+              .collect(Collectors.toList());
+   }
+
+   /**
+    * @see PostService#convertToDTO(Post)
+    */
+   @Override
+   public PostDTO convertToDTO(Post post) {
+      return modelMapper.map(post,PostDTO.class);
+   }
+
+   /**
+    * @see PostService#convertToDTO(List)
+    */
+   @Override
+   public List<PostDTO> convertToDTO(List<Post> posts) {
+      return posts
+              .stream()
+              .map(this::convertToDTO)
+              .collect(Collectors.toList());
+   }
+
 }

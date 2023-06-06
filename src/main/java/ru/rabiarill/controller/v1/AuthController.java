@@ -17,6 +17,7 @@ import ru.rabiarill.dto.security.JwtUserDTO;
 import ru.rabiarill.exception.model.user.NotValidUserException;
 import ru.rabiarill.model.User;
 import ru.rabiarill.service.registration.RegistrationService;
+import ru.rabiarill.service.user.UserService;
 import ru.rabiarill.util.security.JwtUtil;
 import ru.rabiarill.util.validator.UserValidator;
 
@@ -27,13 +28,15 @@ import javax.validation.Valid;
 public class AuthController {
 
    private final RegistrationService registrationService;
+   private final UserService userService;
    private final JwtUtil jwtUtil;
    private final AuthenticationManager authenticationManager;
    private final UserValidator userValidator;
 
    @Autowired
-   public AuthController(RegistrationService registrationService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserValidator userValidator) {
+   public AuthController(RegistrationService registrationService, UserService userService, JwtUtil jwtUtil, AuthenticationManager authenticationManager, UserValidator userValidator) {
       this.registrationService = registrationService;
+      this.userService = userService;
       this.jwtUtil = jwtUtil;
       this.authenticationManager = authenticationManager;
       this.userValidator = userValidator;
@@ -61,7 +64,7 @@ public class AuthController {
    @PostMapping
    public ResponseEntity<JwtTokenDTO> generateJwtToken(@RequestBody @Valid UserDTO userDTO,
                                                        BindingResult bindingResult) {
-      User user = userDTO.convertToUser();
+      User user = userService.convertToUser(userDTO);
       userValidator.validate(user, bindingResult);
 
       if (bindingResult.hasErrors())

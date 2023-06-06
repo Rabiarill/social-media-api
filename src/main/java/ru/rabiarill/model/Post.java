@@ -1,11 +1,14 @@
 package ru.rabiarill.model;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.rabiarill.dto.model.PostDTO;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "Posts")
@@ -101,6 +104,16 @@ public class Post {
 
    public void setImages(List<Image> images) {
       this.images = images;
+   }
+
+   public PostDTO convertToDTO(){
+      return new ModelMapper().map(this, PostDTO.class);
+   }
+
+   public static List<PostDTO> convertListToDTO(List<Post> notes) {
+      return notes.stream()
+              .map(Post::convertToDTO)
+              .collect(Collectors.toList());
    }
 
    @Override

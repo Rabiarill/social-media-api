@@ -1,7 +1,5 @@
 package ru.rabiarill.model;
 
-import org.modelmapper.ModelMapper;
-import ru.rabiarill.dto.model.UserDTO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -97,7 +95,4 @@ public class User {
       this.email = newUser.getEmail();
    }
 
-   public UserDTO convertToDTO(){
-      return new ModelMapper().map(this, UserDTO.class);
-   }
 }

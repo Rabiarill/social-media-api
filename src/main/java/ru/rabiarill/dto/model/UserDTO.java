@@ -1,9 +1,6 @@
 package ru.rabiarill.dto.model;
 
-import org.modelmapper.ModelMapper;
-import ru.rabiarill.model.User;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -21,6 +18,15 @@ public class UserDTO {
 
    @Size(min = 4, message = "Password size should be more than 4")
    private String password;
+
+   public UserDTO() { }
+
+   public UserDTO(int id, String username, String email, String password) {
+      this.id = id;
+      this.username = username;
+      this.email = email;
+      this.password = password;
+   }
 
    public int getId() {
       return id;
@@ -52,10 +58,6 @@ public class UserDTO {
 
    public void setPassword(String password) {
       this.password = password;
-   }
-
-   public User convertToUser() {
-      return new ModelMapper().map(this, User.class);
    }
 
 }

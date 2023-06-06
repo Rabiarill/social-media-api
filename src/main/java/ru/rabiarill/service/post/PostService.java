@@ -1,5 +1,6 @@
 package ru.rabiarill.service.post;
 
+import ru.rabiarill.dto.model.PostDTO;
 import ru.rabiarill.exception.model.post.PostNotFoundException;
 import ru.rabiarill.model.Post;
 
@@ -21,7 +22,7 @@ public interface PostService {
     * Method that find post by owner id.
     *
     * @param id
-    * @return @return <code>List<Post></code> object
+    * @return <code>List<Post></code> object
     */
    List<Post> findByOwnerId(int id);
 
@@ -29,7 +30,7 @@ public interface PostService {
     * Method that save an object Post.
     *
     * @param post
-    * @return @return <code>Post</code> object
+    * @return <code>Post</code> object
     */
    Post save(Post post);
 
@@ -39,5 +40,37 @@ public interface PostService {
     * @param id
     */
    void deleteById(int id);
+
+   /**
+    * Method that convert PostDTO object to Post object.
+    *
+    * @param postDTO
+    * @return <code>Post</code> object
+    */
+   Post convertToPost(PostDTO postDTO);
+
+   /**
+    * Method than convert list of PostDTO objects to list of Post objects.
+    *
+    * @param postDTOs
+    * @return <code>List<Post></code> object
+    */
+   List<Post> convertToPost(List<PostDTO> postDTOs);
+
+   /**
+    * Method that convert Post object to PostDTO object.
+    *
+    * @param post
+    * @return <code>PostDTO</code> object
+    */
+   PostDTO convertToDTO(Post post);
+
+   /**
+    * Method than convert list of Post objects to list of PostDTO objects.
+    *
+    * @param posts
+    * @return <code>List<PostDTO></code> object
+    */
+   List<PostDTO> convertToDTO(List<Post> posts);
 
 }

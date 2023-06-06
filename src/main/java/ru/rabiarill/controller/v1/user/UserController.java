@@ -1,4 +1,4 @@
-package ru.rabiarill.controller.v1;
+package ru.rabiarill.controller.v1.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +45,7 @@ public class UserController {
     */
    @GetMapping()
    public ResponseEntity<UserDTO> userInfo(@AuthenticationPrincipal(expression = "user") User sender) {
-      return new ResponseEntity<>(sender.convertToDTO(), HttpStatus.OK);
+      return new ResponseEntity<>(userService.convertToDTO(sender), HttpStatus.OK);
    }
 
    /**
@@ -60,7 +60,7 @@ public class UserController {
    public ResponseEntity<JwtTokenDTO> update(@RequestBody @Valid UserDTO userDTO,
                                              BindingResult bindingResult,
                                              @AuthenticationPrincipal(expression = "user") User sender) {
-      User userToUpdate = userDTO.convertToUser();
+      User userToUpdate = userService.convertToUser(userDTO);
       sender.updateFields(userToUpdate);
 
       userValidator.validate(sender, bindingResult);

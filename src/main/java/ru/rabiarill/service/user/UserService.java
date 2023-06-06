@@ -1,6 +1,7 @@
 package ru.rabiarill.service.user;
 
 
+import ru.rabiarill.dto.model.UserDTO;
 import ru.rabiarill.model.User;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public interface UserService {
     * Method that find user by username.
     *
     * @param username
-    * @return @return <code>Optional<User></code> object
+    * @return <code>Optional<User></code> object
     */
    Optional<User> findByUsername(String username);
 
@@ -35,7 +36,7 @@ public interface UserService {
     * Method that save an object User.
     *
     * @param user
-    * @return @return <code>User</code> object
+    * @return <code>User</code> object
     */
    User save(User user);
 
@@ -45,5 +46,21 @@ public interface UserService {
     * @param id
     */
    void deleteById(int id);
+
+   /**
+    * Method that convert UserDTO object to User object.
+    *
+    * @param userDTO
+    * @return <code>User</code> object
+    */
+   User convertToUser(UserDTO userDTO);
+
+   /**
+    * Method that convert User object to UserDTO object.
+    *
+    * @param user
+    * @return
+    */
+   UserDTO convertToDTO(User user);
 
 }
