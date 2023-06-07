@@ -56,11 +56,26 @@ public interface UserService {
    User convertToUser(UserDTO userDTO);
 
    /**
+    * Method convert list of UserDTO objects to list of User objects.
+    *
+    * @param userDTOs
+    * @return @return <code>List<User></code> object
+    */
+   List<User> convertListToUser(List<UserDTO> userDTOs);
+
+   /**
     * Method that convert User object to UserDTO object.
     *
     * @param user
-    * @return
+    * @return <code>UserDTO</code> object
     */
    UserDTO convertToDTO(User user);
 
+   /**
+    * Method convert list of User objects to list of UserDTO objects.
+    *
+    * @param users
+    * @return @return <code>List<UserDTO></code> object
+    */
+   List<UserDTO> convertListToDTO(List<User> users);
 }

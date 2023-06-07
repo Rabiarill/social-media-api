@@ -12,6 +12,7 @@ import ru.rabiarill.service.user.UserService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("userService")
 @Transactional(readOnly = true)
@@ -79,11 +80,33 @@ public class UserServiceImpl implements UserService {
    }
 
    /**
+    * @see UserService#convertListToUser(List)
+    */
+   @Override
+   public List<User> convertListToUser(List<UserDTO> userDTOs){
+      return userDTOs
+              .stream()
+              .map(this::convertToUser)
+              .collect(Collectors.toList());
+   }
+
+   /**
     * @see UserService#convertToDTO(User)
     */
    @Override
    public UserDTO convertToDTO(User user) {
       return modelMapper.map(user, UserDTO.class);
+   }
+
+   /**
+    * @see UserService#convertListToDTO(List)
+    */
+   @Override
+   public List<UserDTO> convertListToDTO(List<User> users){
+      return users
+              .stream()
+              .map(this::convertToDTO)
+              .collect(Collectors.toList());
    }
 
 }
