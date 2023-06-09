@@ -2,6 +2,7 @@ package ru.rabiarill.service.post.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rabiarill.dto.model.PostDTO;
@@ -42,6 +43,14 @@ public class PostServiceImpl implements PostService {
    @Override
    public List<Post> findByOwnerId(int id) {
       return postRepository.findByOwnerId(id);
+   }
+
+   /**
+    * @see PostService#findByOwnerId(int, int, int)
+    */
+   @Override
+   public List<Post> findByOwnerId(int id, int page, int itemPerPage){
+      return postRepository.findByOwnerId(id, PageRequest.of(page, itemPerPage));
    }
 
    /**

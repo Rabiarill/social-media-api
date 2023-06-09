@@ -27,6 +27,16 @@ public interface PostService {
    List<Post> findByOwnerId(int id);
 
    /**
+    * Method  find all posts by owner id with pagination.
+    *
+    * @param id
+    * @param page
+    * @param itemsPerPage
+    * @return <code>List<Post></code> object
+    */
+   List<Post> findByOwnerId(int id, int page, int itemsPerPage);
+
+   /**
     * Method that save an object Post.
     *
     * @param post

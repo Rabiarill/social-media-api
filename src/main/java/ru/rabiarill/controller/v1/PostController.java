@@ -42,6 +42,23 @@ public class PostController {
    }
 
    /**
+    * Method find all user posts with pagination.
+    *
+    * @param owner
+    * @param page defaultValue = 0
+    * @param itemsPerPage defaultValue = 5
+    * @return <code>ResponseEntity</code> with a <code><List<PostDTO>><code> object and the HTTP status
+    */
+   @GetMapping("/pagination")
+   public ResponseEntity<List<PostDTO>> getUserPostsWithPagination(@AuthenticationPrincipal(expression = "user") User owner,
+                                                                   @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                                                   @RequestParam(value = "itemsPerPage", required = false, defaultValue = "5") int itemsPerPage){
+      List<PostDTO> response = Post.convertListToDTO(postService.findByOwnerId(owner.getId(), page, itemsPerPage));
+
+      return new ResponseEntity<>(response, HttpStatus.OK);
+   }
+
+   /**
     * Method create post in the database.
     *
     * @param postDTO
