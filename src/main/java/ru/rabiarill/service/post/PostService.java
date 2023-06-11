@@ -27,6 +27,14 @@ public interface PostService {
    List<Post> findByOwnerId(int id);
 
    /**
+    * Method that find all the posts of the people the user is subscribed.
+    *
+    * @param id
+    * @return <code>List<Post></code> object
+    */
+   List<Post> findBySubscriberId(int id);
+
+   /**
     * Method  find all posts by owner id with pagination.
     *
     * @param id

@@ -46,6 +46,14 @@ public class PostServiceImpl implements PostService {
    }
 
    /**
+    * @see PostService#findBySubscriberId(int)
+    */
+   @Override
+   public List<Post> findBySubscriberId(int id) {
+      return postRepository.findBySubscriberId(id);
+   }
+
+   /**
     * @see PostService#findByOwnerId(int, int, int)
     */
    @Override

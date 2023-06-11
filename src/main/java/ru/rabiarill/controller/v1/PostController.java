@@ -36,7 +36,7 @@ public class PostController {
     */
    @GetMapping
    public ResponseEntity<List<PostDTO>> getUserPosts(@AuthenticationPrincipal(expression = "user") User owner){
-      List<PostDTO> response = Post.convertListToDTO(postService.findByOwnerId(owner.getId()));
+      List<PostDTO> response = postService.convertToDTO(postService.findByOwnerId(owner.getId()));
 
       return new ResponseEntity<>(response, HttpStatus.OK);
    }
@@ -53,7 +53,20 @@ public class PostController {
    public ResponseEntity<List<PostDTO>> getUserPostsWithPagination(@AuthenticationPrincipal(expression = "user") User owner,
                                                                    @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                                                                    @RequestParam(value = "itemsPerPage", required = false, defaultValue = "5") int itemsPerPage){
-      List<PostDTO> response = Post.convertListToDTO(postService.findByOwnerId(owner.getId(), page, itemsPerPage));
+      List<PostDTO> response = postService.convertToDTO(postService.findByOwnerId(owner.getId(), page, itemsPerPage));
+
+      return new ResponseEntity<>(response, HttpStatus.OK);
+   }
+
+   /**
+    * Method that returns all the posts of the people the user is subscribed.
+    *
+    * @param user
+    * @return <code>ResponseEntity</code> with a <code><List<PostDTO>><code> object and the HTTP status
+    */
+   @GetMapping("/subs")
+   public ResponseEntity<List<PostDTO>> getSubscribedToPosts(@AuthenticationPrincipal(expression = "user") User user){
+      List<PostDTO> response = postService.convertToDTO(postService.findBySubscriberId(user.getId()));
 
       return new ResponseEntity<>(response, HttpStatus.OK);
    }
