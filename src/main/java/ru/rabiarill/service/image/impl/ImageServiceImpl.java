@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.rabiarill.model.Image;
+import ru.rabiarill.model.Post;
 import ru.rabiarill.repository.ImageRepository;
 import ru.rabiarill.service.image.ImageService;
 
@@ -21,11 +22,12 @@ public class ImageServiceImpl implements ImageService {
    }
 
    /**
-    * @see ImageService#save(List)
+    * @see ImageService#save(List, Post)
     */
    @Override
    @Transactional
-   public List<Image> save(List<Image> images) {
+   public List<Image> save(List<Image> images, Post post) {
+      images.forEach(p -> p.setPost(post));
       return imageRepository.saveAll(images);
    }
 

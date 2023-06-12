@@ -1,6 +1,7 @@
 package ru.rabiarill.service.image;
 
 import ru.rabiarill.model.Image;
+import ru.rabiarill.model.Post;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface ImageService {
     * @param images
     * @return <code>List<Image></code> object
     */
-   List<Image> save(List<Image> images);
+   List<Image> save(List<Image> images, Post post);
 
    /**
     * Method delete images in database.

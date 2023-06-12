@@ -11,6 +11,7 @@ import ru.rabiarill.exception.model.NoAccessException;
 import ru.rabiarill.exception.model.post.NotValidPostException;
 import ru.rabiarill.model.Post;
 import ru.rabiarill.model.User;
+import ru.rabiarill.service.image.ImageService;
 import ru.rabiarill.service.post.PostService;
 
 import javax.validation.Valid;
@@ -22,10 +23,12 @@ import java.util.List;
 public class PostController {
 
    private final PostService postService;
+   private final ImageService imageService;
 
    @Autowired
-   public PostController(PostService postService) {
+   public PostController(PostService postService, ImageService imageService) {
       this.postService = postService;
+      this.imageService = imageService;
    }
 
    /**
@@ -94,7 +97,9 @@ public class PostController {
       postToSave.setCreatedAt(new Date());
       postToSave.setUpdated_at(new Date());
 
-      postService.save(postToSave);
+      postToSave = postService.save(postToSave);
+      imageService.save(postToSave.getImages(), postToSave);
+
 
       return new ResponseEntity<>(postService.convertToDTO(postToSave), HttpStatus.CREATED);
    }
